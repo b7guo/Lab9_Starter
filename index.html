@@ -87,7 +87,16 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "684a5f576a484322b85e1cd1d998e97d"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+</script>
+                        
+  <script>
+    TrackJS.track('Testing TrackJS!');
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -102,6 +111,107 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    errorBtns[0].addEventListener('click', () => {
+      console.log('log');
+    })
+    errorBtns[1].addEventListener('click', () => {
+      console.error('console error')
+    })
+    errorBtns[2].addEventListener('click', () => {
+      console.count()
+    })
+    errorBtns[3].addEventListener('click', () => {
+      console.warn('console warn')
+    })
+    errorBtns[4].addEventListener('click', () => {
+      const x = 5;
+      const y = 3;
+      const reason = 'x is expected to be less than y';
+      console.assert(x < y, {x, y, reason});
+    })
+    errorBtns[5].addEventListener('click', () => {
+      console.clear()
+    })
+    errorBtns[6].addEventListener('click', () => {
+      console.dir(document.head);
+    })
+    errorBtns[7].addEventListener('click', () => {
+      console.dirxml(document);
+    })
+    errorBtns[8].addEventListener('click', () => {
+      console.group()
+    })
+    errorBtns[9].addEventListener('click', () => {
+      console.groupEnd()
+    })
+    errorBtns[10].addEventListener('click', () => {
+      console.table([
+      {
+        first: 'René',
+        last: 'Magritte',
+        id: 'A10529890'
+      },
+      {
+        first: 'Chaim',
+        last: 'Soutine',
+        
+      },
+      {
+        first: 'Henri',
+        last: 'Matisse',
+        id: 'A24598630'
+      }
+    ]);
+    })
+    errorBtns[11].addEventListener('click', () => {
+      console.time('time button');
+    })
+    errorBtns[12].addEventListener('click', () => {
+      console.timeEnd('time button')
+    })
+    errorBtns[13].addEventListener('click', () => {
+      const deep = () => { deeper(); };
+      const deeper = () => { deepest(); };
+      const deepest = () => { console.trace('handleButton'); };
+      deep();
+    })
+    errorBtns[14].addEventListener('click', () => {
+      hello; 
+    })
+    window.onerror = function(message, source, lineno, colno, error) { 
+        console.log('Error: ' + message + ' Script: ' + source + ' Line: ' + lineno); 
+    };
+    class ValidationError extends Error {
+      constructor(message) {
+      super(message); // (1)
+      this.name = "ValidationError"; // (2)
+      this.message = 'input ins not a number'
+      }
+    }
+
+    function test() {
+      form.addEventListener('submit', e => {
+      e.preventDefault();
+      let output = document.querySelector('output');
+      let firstNum = document.querySelector('#first-num').value;
+      let secondNum = document.querySelector('#second-num').value;
+      if(isNaN(firstNum)||isNaN(secondNum)){
+        throw new ValidationError("input is not a number");
+      }
+      let operator = document.querySelector('#operator').value;
+      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      });
+      
+    }
+
+    try {
+      test()
+    } catch (err) {
+      console.log(err.name)
+      console.log(err.message)
+    } finally {
+      
+    }
   </script>
 </body>
 
